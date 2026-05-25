@@ -1,0 +1,13 @@
+services:
+  amneziawg:
+    build: .
+    image: vernette/amneziawg-client:2.0.0
+    container_name: amneziawg-client
+    restart: always
+    # Uncomment one of the following if needed:
+    # network_mode: "host"                  # expose interface to the host
+    # network_mode: "service:some_service"  # share interface with another container
+    volumes:
+      - ./configs:/etc/amnezia/amneziawg:ro
+    cap_add:
+      - NET_ADMIN
