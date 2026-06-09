@@ -1,7 +1,7 @@
 services:
   amneziawg:
     build: .
-    image: vernette/amneziawg-client:2.0.0
+    image: vernette/amneziawg-client:v1.0.20260223
     container_name: amneziawg-client
     restart: always
     # Uncomment one of the following if needed
