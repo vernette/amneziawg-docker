@@ -17,8 +17,15 @@ WORKDIR /src
 
 RUN apk add --no-cache git build-base linux-headers bash
 
-RUN git clone --depth 1 --branch "${AWG_TOOLS_REF}" https://github.com/amnezia-vpn/amneziawg-tools.git . && \
-  make -C src && \
+RUN git clone --depth 1 --branch "${AWG_TOOLS_REF}" https://github.com/amnezia-vpn/amneziawg-tools.git .
+
+# https://github.com/amnezia-vpn/amneziawg-tools/pull/45
+# awg-quick writes net.ipv4.conf.all.src_valid_mark unconditionally, which fails
+# on read-only /proc/sys inside a container. Skip the write when already set,
+# mirroring upstream wg-quick; the value is then provided via the sysctls option.
+RUN sed -i 's#&& cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1#\&\& [[ "$(sysctl -n net.ipv4.conf.all.src_valid_mark 2>/dev/null)" != 1 ]] \&\& cmd sysctl -q net.ipv4.conf.all.src_valid_mark=1#' src/wg-quick/linux.bash
+
+RUN make -C src && \
   make -C src install DESTDIR=/out WITH_WGQUICK=yes
 
 # runtime
