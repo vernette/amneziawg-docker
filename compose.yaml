@@ -1,8 +1,8 @@
 services:
   amneziawg:
     build: .
-    image: vernette/amneziawg-client:v1.0.20260223
-    container_name: amneziawg-client
+    image: vernette/amneziawg:v1.0.20260223
+    container_name: amneziawg
     restart: always
     # Uncomment one of the following if needed
     # Otherwise, the interface will only be accessible within this container

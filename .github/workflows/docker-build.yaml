@@ -10,7 +10,7 @@ on:
         required: false
 
 env:
-  IMAGE: vernette/amneziawg-client
+  IMAGE: vernette/amneziawg
 
 jobs:
   build:

@@ -1,1 +1,1 @@
-# AmneziaWG Docker Client
+# AmneziaWG Docker
