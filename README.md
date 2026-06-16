@@ -101,6 +101,16 @@ docker run --rm --entrypoint awg vernette/amneziawg:v1.0.20260223 genpsk
 
 Более подробно про параметры AmneziaWG в [документации](https://docs.amnezia.org/ru/documentation/amnezia-wg/#%D0%BF%D0%B0%D1%80%D0%B0%D0%BC%D0%B5%D1%82%D1%80%D1%8B-%D0%BA%D0%BE%D0%BD%D1%84%D0%B8%D0%B3%D1%83%D1%80%D0%B0%D1%86%D0%B8%D0%B8) и [статье](https://habr.com/ru/companies/amnezia/articles/1014636/).
 
+### Генерация параметров обфускации
+
+Параметры обфускации (`Jc`, `Jmin`, `Jmax`, `S1`-`S4`, `H1`-`H4`, `I1`) можно сгенерировать командой `awg-genparams` - тем же алгоритмом, что и в официальном клиенте Amnezia. Один запуск печатает **два блока** с идентичными `S`/`H`: серверный и клиентский.
+
+```bash
+docker run --rm --entrypoint awg-genparams vernette/amneziawg:v1.0.20260223
+```
+
+Скопируйте **серверный** блок в `[Interface]` серверного конфига, **клиентский** - в `[Interface]` клиентского. Совпадать на обеих сторонах обязаны только `S`/`H`. `Jc`/`Jmin`/`Jmax` (junk-пакеты хэндшейка) и `I1` (special junk) - только клиентские параметры, поэтому есть только в клиентском блоке; `I1` рекомендуется заменить на своё [уникальное значение](https://docs.amnezia.org/ru/documentation/instructions/new-amneziawg-selfhosted#%D0%BF%D0%BE%D0%B8%D1%81%D0%BA-%D1%81%D0%B8%D0%B3%D0%BD%D0%B0%D1%82%D1%83%D1%80%D1%8B-%D0%BF%D1%80%D0%BE%D1%82%D0%BE%D0%BA%D0%BE%D0%BB%D0%B0-%D0%BD%D0%B0-%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80%D0%B5-quic).
+
 ## Работа в режиме клиента
 
 1. Создайте директорию `configs`:

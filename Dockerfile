@@ -42,6 +42,7 @@ RUN mkdir -p /etc/amnezia/amneziawg
 ENV WG_QUICK_USERSPACE_IMPLEMENTATION=amneziawg-go \
   WG_I_PREFER_BUGGY_USERSPACE_TO_POLISHED_KMOD=1
 
-COPY --chmod=755 entrypoint.sh /
+COPY --chmod=755 scripts/entrypoint.sh /
+COPY --chmod=755 scripts/awg-genparams.sh /usr/bin/awg-genparams
 
 ENTRYPOINT ["/entrypoint.sh"]
