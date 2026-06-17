@@ -32,11 +32,12 @@ jobs:
       - name: Skip if image tag already exists
         id: exists
         run: |
-          if docker manifest inspect "$IMAGE:${{ steps.ref.outputs.tools }}" >/dev/null 2>&1; then
-            echo "skip=true"  >> "$GITHUB_OUTPUT"
-          else
-            echo "skip=false" >> "$GITHUB_OUTPUT"
+          skip=false
+          if [ "${{ github.event_name }}" = "schedule" ] \
+             && docker manifest inspect "$IMAGE:${{ steps.ref.outputs.tools }}" >/dev/null 2>&1; then
+            skip=true
           fi
+          echo "skip=$skip" >> "$GITHUB_OUTPUT"
 
       - uses: docker/setup-qemu-action@v3
         if: steps.exists.outputs.skip == 'false'
