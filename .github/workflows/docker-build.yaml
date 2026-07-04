@@ -1,6 +1,11 @@
 name: build-image
 
 on:
+  push:
+    branches: [master]
+    paths:
+      - Dockerfile
+      - scripts/**
   schedule:
     - cron: "0 6 * * *"
   workflow_dispatch:
