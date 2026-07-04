@@ -21,6 +21,10 @@ randint() {
   lo=$1
   hi=$2
   span=$((hi - lo))
+  if [ "$span" -le 0 ]; then
+    printf '%s' "$lo"
+    return
+  fi
   rand=$(od -An -tu4 -N4 /dev/urandom | tr -d ' ')
   printf '%s' "$((lo + rand % span))"
 }
